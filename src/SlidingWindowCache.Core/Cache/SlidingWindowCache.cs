@@ -301,6 +301,8 @@ namespace SlidingWindowCache.Core.Cache
             return data;
         }
 
+        public int Count => _dataDict.Count;
+
         public async Task<IEnumerable<TData>> GetCacheData(TKey start, TKey end, Func<TData, TKey> keyOfTData)
         {
             var diff = _calculator.Subtract(end, start);

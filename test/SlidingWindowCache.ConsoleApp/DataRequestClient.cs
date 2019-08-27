@@ -8,41 +8,41 @@ namespace SlidingWindowCache.ConsoleApp
 {
     public class DataRequestClient
     {
-        private readonly ISlidingWindowCache<long, DataModel> _timeCache;
+        private readonly ISlidingWindowCache<long, DataModel> _cache;
 
         private long _lastPoint;
         public long DiffSize { get; set; }
 
-        public DataRequestClient(ISlidingWindowCache<long, DataModel> timeCache)
+        public DataRequestClient(ISlidingWindowCache<long, DataModel> cache)
         {
-            _timeCache = timeCache;
-            _timeCache.OnDataAutoLoaderStatusChanged += TimeCache_DataAutoLoaderStatusChanged;
+            _cache = cache;
+            _cache.OnDataAutoLoaderStatusChanged += CacheDataAutoLoaderStatusChanged;
         }
 
-        private void TimeCache_DataAutoLoaderStatusChanged(object sender, TaskStatus status)
+        private void CacheDataAutoLoaderStatusChanged(object sender, TaskStatus status)
         {
             switch (status)
             {
                 case TaskStatus.Canceled:
-                    Console.WriteLine("time cache data load task be canceled");
+                    Console.WriteLine("cache data load task be canceled");
                     break;
                 case TaskStatus.RanToCompletion:
-                    Console.WriteLine("time cache data load task is RanToCompletion");
+                    Console.WriteLine("cache data load task is RanToCompletion");
                     break;
                 case TaskStatus.Running:
-                    Console.WriteLine("time cache data load task is Running");
+                    Console.WriteLine("cache data load task is Running");
                     break;
             }
         }
 
         private async Task<IEnumerable<DataModel>> ReadNextTimeData()
         {
-            return await _timeCache.GetCacheData(_lastPoint, _timeCache.CurrentPoint, t => t.Point);
+            return await _cache.GetCacheData(_lastPoint, _cache.CurrentPoint, t => t.Point);
         }
 
         private async Task<IEnumerable<DataModel>> ReadBeforeTimeData()
         {
-            return await _timeCache.GetCacheData(_timeCache.CurrentPoint, _lastPoint, t => t.Point);
+            return await _cache.GetCacheData(_cache.CurrentPoint, _lastPoint, t => t.Point);
         }
 
         private ConsoleKey ReadConsoleKey()
@@ -60,10 +60,10 @@ namespace SlidingWindowCache.ConsoleApp
             switch (key)
             {
                 case ConsoleKey.RightArrow:
-                    _timeCache.CurrentPoint += DiffSize;
+                    _cache.CurrentPoint += DiffSize;
                     return await ReadNextTimeData();
                 case ConsoleKey.LeftArrow:
-                    _timeCache.CurrentPoint -= DiffSize;
+                    _cache.CurrentPoint -= DiffSize;
                     return await ReadBeforeTimeData();
                 default:
                     return null;
@@ -74,8 +74,8 @@ namespace SlidingWindowCache.ConsoleApp
         {
             var data = await ReadTimeData(key);
             Console.WriteLine(
-                $"{new DateTime(_timeCache.CurrentPoint):yyyy-MM-dd HH:mm:ss},receive data count:{data?.Count()}");
-            _lastPoint = _timeCache.CurrentPoint;
+                $"{new DateTime(_cache.CurrentPoint):yyyy-MM-dd HH:mm:ss},receive data count:{data?.Count()}");
+            _lastPoint = _cache.CurrentPoint;
         }
     }
 }
