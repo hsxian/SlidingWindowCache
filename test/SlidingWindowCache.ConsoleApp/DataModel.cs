@@ -21,7 +21,7 @@ namespace SlidingWindowCache.ConsoleApp
                 //模拟远程访问数据时可能的延迟
                 Task.Delay(rd.Next(50, 400), cancellationToken).Wait(cancellationToken);
                 var diff = (int)(e - s);
-                var count = diff > 1000 ? 1000 : diff;
+                var count = diff > 100 ? 100 : diff;
                 var result = Enumerable.Range(0, count)
                     .Select(t => new DataModel { Point = s + rd.Next(diff) })
                     .OrderBy(t => t.Point)
