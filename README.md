@@ -22,7 +22,10 @@ var cache = new SlidingWindowCache<long, DataModel>(config)
     CurrentPoint = config.StartPoint
 };
 
-var data = await cache.GetCacheData(new DateTime(2019, 1, 1, 0, 1, 0).Ticks, new DateTime(2019, 1, 1, 0, 2, 0).Ticks, t => t.Point);
+var data = await cache.GetCacheData(
+                new DateTime(2019, 1, 1, 0, 1, 0).Ticks,
+                new DateTime(2019, 1, 1, 0, 2, 0).Ticks,
+                t => t.Point);
 ```
 
 For more information, please check [SlidingWindowCache.ConsoleApp](test/SlidingWindowCache.ConsoleApp/Program.cs).
