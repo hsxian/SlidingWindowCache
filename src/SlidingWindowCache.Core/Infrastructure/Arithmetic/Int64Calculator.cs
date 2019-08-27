@@ -15,5 +15,8 @@ namespace SlidingWindowCache.Core.Infrastructure.Arithmetic
         public override bool Ne(long a, long b) => a != b;
         public override bool Ge(long a, long b) => a > b;
         public override bool Gt(long a, long b) => a >= b;
+        public override long MinValue => long.MinValue;
+        public override long MaxValue => long.MaxValue;
+        public override long Zero => 0;
     }
 }

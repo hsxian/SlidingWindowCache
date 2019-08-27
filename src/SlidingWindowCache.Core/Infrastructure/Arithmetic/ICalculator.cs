@@ -18,5 +18,8 @@ namespace SlidingWindowCache.Core.Infrastructure.Arithmetic
         bool Ne(T a, T b);
         bool Ge(T a, T b);
         bool Gt(T a, T b);
+        T MinValue { get;}
+        T MaxValue { get;}
+        T Zero{ get;}
     }
 }
