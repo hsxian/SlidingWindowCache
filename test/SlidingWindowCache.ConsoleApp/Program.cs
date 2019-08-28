@@ -15,7 +15,7 @@ namespace SlidingWindowCache.ConsoleApp
                 StartPoint = new DateTime(2019, 1, 1).Ticks,
                 EndPoint = new DateTime(2019, 2, 1).Ticks,
                 TotalLoadSize = new TimeSpan(0, 30, 0).Ticks,
-                TotalCacheSize = new TimeSpan(7, 0, 0).Ticks
+                TotalCacheSize = new TimeSpan(1, 0, 0).Ticks
             };
 
 
@@ -32,6 +32,8 @@ namespace SlidingWindowCache.ConsoleApp
             while (true)
             {
                 var key = Console.ReadKey().Key;
+//                var key = ConsoleKey.RightArrow;
+//                Task.Delay(200).Wait();
                 await client.DoWork(key);
             }
         }

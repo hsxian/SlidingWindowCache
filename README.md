@@ -1,5 +1,7 @@
 # SlidingWindowCache
 
+[![NuGet Badge](https://buildstats.info/nuget/SlidingWindowCache)](https://www.nuget.org/packages/SlidingWindowCache)
+
 SlidingWindowCache provides a local sliding window cache, which is mainly used to cache data organized in a certain sequence, such as time series data.The size of the load data window and the size of the cache data window can be configured.
 
 SlidingWindowCache is compliant with the .NET standard and supports cross-platform use.
