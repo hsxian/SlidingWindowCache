@@ -305,9 +305,8 @@ namespace SlidingWindowCache.Core.Cache
 
         public async Task<IEnumerable<TData>> GetCacheData(TKey start, TKey end, Func<TData, TKey> keyOfTData)
         {
-            var diff = _calculator.Subtract(end, start);
-            if (_calculator.Gt(diff, _calculator.DivideSingle(_calculator.MaxValue, 10000)) ||
-                _calculator.Lt(diff, _calculator.DivideSingle(_calculator.MinValue, 10000))) return null;
+            if (_calculator.Lt(start, _config.StartPoint) || _calculator.Gt(end, _config.EndPoint)) return null;
+
             var result = new List<TData>();
             var keys = _keyHelper.GetKeys(start, end);
             foreach (var key in keys)
